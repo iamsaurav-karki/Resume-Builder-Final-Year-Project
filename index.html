@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link rel="icon" href="./assets/images/logo.png" type="image/png" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #fefefe;
+      }
+
+      /* Navbar */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        padding: 20px 40px;
+        position: fixed;
+        width: 100%;
+        top: -100px;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-bottom: 2px solid #f4f4f4;
+        transition: top 0.6s ease-in-out;
+      }
+
+      .navbar.active {
+        top: 0;
+      }
+
+      .navbar .brand {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .navbar .brand img {
+        height: 50px;
+      }
+
+      .navbar h1 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #444;
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+        text-align: center;
+        position: relative;
+        background-image: url("https://img.freepik.com/free-photo/flat-lay-resume-paperwork-top-view-job-search_23-2149033459.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        z-index: 1;
+      }
+
+      .hero-content {
+        z-index: 2;
+        animation: fadeIn 1.2s ease-in-out;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+      }
+
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .action-buttons a {
+        text-decoration: none;
+        color: white;
+        padding: 12px 30px;
+        background: #007bff;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-align: center;
+        transition: transform 0.3s ease, background-color 0.3s ease-in-out;
+      }
+
+      .action-buttons a:hover {
+        transform: translateY(-5px);
+        background: #0056b3;
+      }
+
+      .action-buttons .label {
+        opacity: 0;
+        font-size: 0.9rem;
+        color: #333;
+        margin-top: 5px;
+        transition: opacity 0.3s ease;
+      }
+
+      .action-buttons a:hover + .label {
+        opacity: 1;
+      }
+
+      /* Footer */
+      .footer {
+        position: fixed;
+        bottom: -100px;
+        width: 100%;
+        text-align: center;
+        padding: 15px 20px;
+        background: #fff;
+        box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        font-size: 1rem;
+        color: white;
+        background-color: #007bff;
+        transition: bottom 0.6s ease-in-out;
+      }
+
+      .footer.active {
+        bottom: 0;
+      }
+
+      .footer p {
+        margin: 0;
+        color: #fefefe;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Features Section */
+      .features {
+        background-color: #f8f9fa;
+        padding: 50px 20px;
+        text-align: center;
+      }
+
+      .features h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .feature-cards {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .feature-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+        color: #007bff;
+      }
+
+      .feature-card p {
+        font-size: 1rem;
+        color: #555;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const navbar = document.querySelector(".navbar");
+        const footer = document.querySelector(".footer");
+
+        setTimeout(() => {
+          navbar.classList.add("active");
+          footer.classList.add("active");
+        }, 300); // Delayed animation
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="brand">
+        <img src="./assets/images/logo.png" alt="Logo" />
+        <h1>Resume Builder</h1>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Build Your Dream Resume</h1>
+        <p>Fast. Professional. Hassle-free.</p>
+        <div class="action-buttons">
+          <a href="/resumebuilder/login.php">Access Your Resume</a>
+          <span class="label"
+            >Log in to manage your resumes and create new ones.</span
+          >
+          <a href="/resumebuilder/register.php">Create Account</a>
+          <span class="label"
+            >Sign up to start building your professional resume.</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features">
+      <h2>Why Choose Resume Builder?</h2>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <h3>Easy-to-Use</h3>
+          <p>
+            Our resume builder is designed to be user-friendly and easy to
+            navigate, so you can focus on your content.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Customizable Templates</h3>
+          <p>
+            Option to customize fonts and background from wide range of
+            available fonts and tiles.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>Instant Download</h3>
+          <p>
+            Once you're done, download your resume instantly in various formats
+            such as PDF and also can print it.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2024 Resume Builder. Crafted with care. All Rights Reserved.</p>
+    </div>
+  </body>
+</html>

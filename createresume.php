@@ -38,7 +38,7 @@ $fn->authPage();
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Mobile No</label>
-                        <input type="number" min="1111111111" name="mobile_no" placeholder="9569569569" max="9999999999"
+                        <input type="number" min="1111111111" name="mobile_no" placeholder="9869569569" max="9999999999"
                             class="form-control" required>
                     </div>
                     <div class="col-md-6">
@@ -111,7 +111,7 @@ $fn->authPage();
 
                     <div class="col-12">
                         <label for="inputAddress" class="form-label"> Address</label>
-                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="lainchaur , Kathmandu" required>
                     </div>
 
 

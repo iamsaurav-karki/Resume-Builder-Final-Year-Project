@@ -50,14 +50,15 @@ $skills = $skills->fetch_all(1);
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background-color: #FAFAFA;
-            font-size: 12pt;
+    padding: 0;
+    background-color: #FAFAFA;
+    font-size: 12pt;
 
-            background: rgb(249, 249, 249);
-            background: radial-gradient(circle, rgba(249, 249, 249, 1) 0%, rgba(240, 232, 127, 1) 49%, rgba(246, 243, 132, 1) 100%);
-            background-image: url(./assets/images/tiles/<?=$resume['background']?>);
-            background-attachment: fixed;
+    
+    background: rgb(249, 249, 249);
+            background: radial-gradient(circle, rgba(238, 242, 255, 1) 0%, rgba(205, 223, 255, 1) 50%, rgba(169, 203, 255, 1) 100%);
+    background-image: url(./assets/images/tiles/<?=$resume['background']?>);
+    background-attachment: fixed;
         }
 
         * {
@@ -131,7 +132,7 @@ $skills = $skills->fetch_all(1);
     if($fn->Auth()!=false && $fn->Auth()['id']==$resume['user_id']){
         ?>
 <div class="extra">
-    <div class="w-100 py-2 bg-dark d-flex justify-content-center gap-3">
+    <div class="w-100 py-2 d-flex justify-content-center gap-3" style="background: radial-gradient(circle, rgba(46, 139, 87, 1) 0%, rgba(0, 128, 128, 1) 50%, rgba(0, 100, 100, 1) 100%);">
         <?php
         $actual_link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         ?>

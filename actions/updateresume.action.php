@@ -42,7 +42,7 @@ if($post['id'] && $post['slug'] && $post['full_name'] && $post['email_id'] && $p
 
   $fn->setAlert('Resume Updated!');
 
-   $fn->redirect('../updateresume.php?resume='.$post['slug']);
+   $fn->redirect('../myresumes.php?resume='.$post['slug']);
 
    die();
 

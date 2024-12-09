@@ -2,45 +2,36 @@
 require '../assets/class/database.class.php';
 require '../assets/class/function.class.php';
 
-if($_POST){
-$post = $_POST;
+if ($_POST) {
+    $post = $_POST;
 
+    if ($post['email_id'] && $post['password']) {
+        $email_id = $db->real_escape_string($post['email_id']);
+        $password = $db->real_escape_string($post['password']);
 
-if($post['email_id'] && $post['password']){
+        // Fetch the user's hashed password from the database
+        $result = $db->query("SELECT id, full_name, password FROM users WHERE email_id = '$email_id'");
 
-  $email_id=$db->real_escape_string($post['email_id']);
-  $password=md5($db->real_escape_string($post['password']));
+        $result = $result->fetch_assoc();
 
-
-  $result = $db->query("SELECT id,full_name FROM users WHERE (email_id = '$email_id' && password = '$password')");
-
-  $result = $result->fetch_assoc();
-
- if($result){
- $fn->setAuth($result);
- $fn->setAlert('Login success');
-  $fn->redirect('../myresumes.php');
-
-
- }else {
-   $fn->setError('Invalid credentials');
-  $fn->redirect('../login.php');
- }
-
-
-
-
-
-}else{
-  $fn->setError('All field is mandatory!');
-
-  $fn->redirect('../login.php');
-}
-}
-else {
-
+        if ($result) {
+            // Verify the entered password with the hashed password stored in the database
+            if (password_verify($password, $result['password'])) {
+                $fn->setAuth($result);
+                $fn->setAlert('Login success');
+                $fn->redirect('../myresumes.php');
+            } else {
+                $fn->setError('Invalid credentials');
+                $fn->redirect('../login.php');
+            }
+        } else {
+            $fn->setError('Invalid credentials');
+            $fn->redirect('../login.php');
+        }
+    } else {
+        $fn->setError('All fields are mandatory!');
+        $fn->redirect('../login.php');
+    }
+} else {
     $fn->redirect('../login.php');
 }
-
-
-?>

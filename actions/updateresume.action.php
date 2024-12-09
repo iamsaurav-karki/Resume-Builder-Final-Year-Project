@@ -25,8 +25,10 @@ if($post['id'] && $post['slug'] && $post['full_name'] && $post['email_id'] && $p
 
 
   }
+  // Add the current date and time in the correct format for updated_at
+  $updated_at = date("Y-m-d H:i:s"); // Format: YYYY-MM-DD HH:MM:SS
+  $columns .= "updated_at='$updated_at'";  // Append updated_at to the columns string
 
-  $columns.='updated_at='.time();
 
 
   try{

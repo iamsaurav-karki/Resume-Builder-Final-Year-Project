@@ -37,7 +37,7 @@ if($post['full_name'] && $post['email_id']){
 
   $fn->setAlert('Profile updated!');
 
-  $fn->redirect('../profile.php');
+  $fn->redirect('../myresumes.php');
 
 
 

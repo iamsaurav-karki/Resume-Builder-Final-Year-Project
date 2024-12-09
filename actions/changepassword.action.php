@@ -2,16 +2,46 @@
 require '../assets/class/database.class.php';
 require '../assets/class/function.class.php';
 
+function checkPasswordStrength($password) {
+    $strength = 0;
+    $length = strlen($password);
+
+    // Check password length
+    if ($length >= 8) $strength++;
+    if ($length >= 14) $strength++;
+
+    // Uppercase letters
+    if (preg_match('/[A-Z]/', $password)) $strength++;
+
+    // Lowercase letters
+    if (preg_match('/[a-z]/', $password)) $strength++;
+
+    // Digits
+    if (preg_match('/[0-9]/', $password)) $strength++;
+
+    // Special characters
+    if (preg_match('/[^a-zA-Z0-9]/', $password)) $strength++;
+
+    // Categorize password
+    if ($strength < 3) return 'Very Weak';
+    if ($strength < 4) return 'Weak';
+    if ($strength < 5) return 'Medium';
+    if ($strength < 6) return 'Strong';
+    return 'Very Strong';
+}
+
 if ($_POST) {
     $post = $_POST;
 
     if ($post['password']) {
-        // Validate the new password (e.g., minimum length)
+        // Validate the new password
         $password = $db->real_escape_string($post['password']);
-        
-        if (strlen($password) < 8) {
+
+        // Check password strength
+        $passwordStrength = checkPasswordStrength($password);
+        if ($passwordStrength == 'Very Weak' || $passwordStrength == 'Weak') {
             // Set the error message and redirect back to the change-password page
-            $fn->setError('Password must be at least 8 characters long');
+            $fn->setError('Password is too weak. Please use a stronger password.');
             $fn->redirect('../change-password.php');
             exit; // Ensure the script halts after redirection
         }

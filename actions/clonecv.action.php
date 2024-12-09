@@ -41,8 +41,8 @@ $skills = $skills->fetch_all(1);
   }
 
   $authid = $fn->Auth()['id'];
-  $columns.='slug,updated_at';
-  $values.="'".$fn->randomstring()."',".time();
+  $columns .= 'slug, updated_at';
+  $values .= "'" . $fn->randomstring() . "', NOW()";
 
 
 

@@ -24,10 +24,12 @@ if ($_POST) {
 
     if ($result) {
         if (time() > strtotime($result['otp_expiry'])) {
-            $fn->setError('OTP has expired.');
-            $fn->redirect('../forgot-password.php');
+            // OTP expired
+            $fn->setError('OTP has expired. Please request a new one.');
+            $fn->redirect('../verification.php');
         }
 
+        // Verify OTP
         if (password_verify($otp, $result['otp'])) {
             $fn->setAlert('OTP verified! Proceed to reset your password.');
             $fn->redirect('../change-password.php');

@@ -6,8 +6,10 @@ session_destroy();
 $fn->setAlert('Login success');
 header('Location:../login.php');
 */
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-session_start();
 require '../assets/class/function.class.php';
 
 $fn = new Functions();

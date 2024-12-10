@@ -349,7 +349,9 @@ if($edus){
         </table>
          <div class="d-flex justify-content-between">
                     <div class="px-3">Date : <?= date('d F, Y', strtotime($resume['updated_at'])) ?></div>
+                    <!-- 
                     <div class="px-3 name text-end"><?=$resume['full_name']?></div>
+                    -->
 
                 </div>
     </div>

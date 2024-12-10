@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $title = "My Resumes | Resume Builder";
 require './assets/includes/header.php';
 require './assets/includes/navbar.php';
@@ -68,6 +71,7 @@ $resumes = bubbleSort($resumes, 'resume_title');
                     echo '<div class="text-center py-3 border rounded mt-3 w-100" style="background-color: rgba(236, 236, 236, 0.56);"><i class="bi bi-file-text"></i> No Resumes Found</div>';
                 }
                 ?>
+
             </div>
         </div>
     </div>

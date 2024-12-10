@@ -18,10 +18,11 @@ $fn->authPage();
 
             <div>
 
-                <form action="actions/createresume.action.php" method="post" class="row g-3 p-3">
+                <form action="actions/createresume.action.php" method="post" class="row g-3 p-3" style="position: relative;">
                     <div class="col-md-6">
                         <label class="form-label">Resume Title</label>
-                        <input type="text" name="resume_title" placeholder="Web Developer" value="resume<?=time()?>" class="form-control" required>
+                        <input type="text" name="resume_title" id="resume_title" placeholder="Web Developer" value="" class="form-control" required> 
+                       
                     </div>
                     <h5 class="mt-3 text-secondary"><i class="bi bi-person-badge"></i> Personal Information</h5>
                     <div class="col-md-6">
@@ -33,9 +34,10 @@ $fn->authPage();
                         <input type="email" name="email_id" placeholder="saurav@abc.com" class="form-control" required>
                     </div>
                     <div class="col-12">
-                        <label for="inputAddress" class="form-label"> Objective</label>
-                        <textarea name="objective" class="form-control" rows="3" required></textarea>
-                    </div>
+                    <label for="inputAddress" class="form-label"> Objective</label>
+                    <textarea name="objective" class="form-control" rows="3" id="objective-field" required></textarea>
+                    <ul id="suggestions-list" class="list-group mt-2" style="display: none;"></ul> <!-- Suggestions container -->
+                </div>
                     <div class="col-md-6">
                         <label class="form-label">Mobile No</label>
                         <input type="number" min="1111111111" name="mobile_no" placeholder="9869569569" max="9999999999"
@@ -123,10 +125,6 @@ $fn->authPage();
                 </form>
             </div>
 
-
-
-
-
         </div>
 
     </div>
@@ -135,6 +133,51 @@ $fn->authPage();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+        <script>
+// JavaScript for objective suggestions
+document.getElementById('objective-field').addEventListener('input', function() {
+    const objective = this.value.trim();
+    const resumeTitle = document.querySelector('input[name="resume_title"]').value.trim(); // Get resume title
+    const suggestionsList = document.getElementById('suggestions-list');
+    
+    if (objective.length > 2) {
+        // Make an AJAX request to fetch suggestions
+        fetch(`actions/objective_suggestions.php?objective=${objective}&title=${resumeTitle}`)
+            .then(response => response.json())
+            .then(data => {
+                suggestionsList.innerHTML = ''; // Clear previous suggestions
+                if (data.suggestions.length > 0) {
+                    data.suggestions.forEach(suggestion => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('list-group-item');
+                        listItem.textContent = suggestion;
+                        listItem.onclick = () => {
+                            document.getElementById('objective-field').value = suggestion;
+                            suggestionsList.style.display = 'none';
+                        };
+                        suggestionsList.appendChild(listItem);
+                    });
+                    suggestionsList.style.display = 'block'; // Show the suggestion list
+                } else {
+                    suggestionsList.style.display = 'none';
+                }
+            })
+            .catch(err => console.error('Error fetching suggestions:', err));
+    } else {
+        suggestionsList.style.display = 'none'; // Hide suggestions if input is short
+    }
+});
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', function(event) {
+    const suggestionsList = document.getElementById('suggestions-list');
+    if (!suggestionsList.contains(event.target) && event.target !== document.getElementById('objective-field')) {
+        suggestionsList.style.display = 'none';
+    }
+});
+</script>
+</body>
+</html>
 </body>
 
 </html>

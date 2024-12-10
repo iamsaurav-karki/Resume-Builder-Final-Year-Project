@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require '../assets/class/database.class.php';
 require '../assets/class/function.class.php';
 
@@ -8,7 +11,7 @@ if ($_POST) {
     // CAPTCHA validation
     if (!isset($_POST['captcha']) || $_POST['captcha'] !== $_SESSION['captcha']) {
         $fn->setError('Invalid CAPTCHA. Please try again.');
-        $fn->redirect('../register.php'); // Redirect back to registration page
+        $fn->redirect('../login.php'); // Redirect back to login page
         exit; // Stop further execution if CAPTCHA is invalid
     }
     unset($_SESSION['captcha']); // Destroy the session variable after validation

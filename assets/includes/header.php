@@ -60,6 +60,36 @@ require './assets/class/function.class.php';
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
+        /* Suggestions List Styling */
+#suggestions-list {
+    max-width: 100%; /* Prevents overflow */
+    width: 100%; /* Matches the input field's width */
+    position: absolute; /* Ensures it's positioned relative to the parent */
+    z-index: 1000; /* Keeps it above other elements */
+    background-color: #fff; /* White background for visibility */
+    border: 1px solid #ccc; /* Light border to distinguish it */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for better UI */
+    max-height: 200px; /* Constrains height for long lists */
+    overflow-y: auto; /* Allows scrolling if the list is too long */
+}
+
+/* Ensure the parent container has relative positioning */
+form {
+    position: relative; /* Makes the suggestions list align properly */
+}
+
+/* List Item Styling */
+#suggestions-list .list-group-item {
+    cursor: pointer; /* Changes cursor to pointer for better usability */
+    padding: 8px 12px; /* Proper spacing for items */
+}
+
+/* Hover Effect for List Items */
+#suggestions-list .list-group-item:hover {
+    background-color: #f0f0f0; /* Subtle background change on hover */
+}
+
     </style>
 
 

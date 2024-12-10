@@ -5,6 +5,14 @@ require '../assets/class/function.class.php';
 if ($_POST) {
     $post = $_POST;
 
+    // CAPTCHA validation
+    if (!isset($_POST['captcha']) || $_POST['captcha'] !== $_SESSION['captcha']) {
+        $fn->setError('Invalid CAPTCHA. Please try again.');
+        $fn->redirect('../register.php'); // Redirect back to registration page
+        exit; // Stop further execution if CAPTCHA is invalid
+    }
+    unset($_SESSION['captcha']); // Destroy the session variable after validation
+
     if ($post['email_id'] && $post['password']) {
         $email_id = $db->real_escape_string($post['email_id']);
         $password = $db->real_escape_string($post['password']);

@@ -14,6 +14,7 @@ require '../assets/class/function.class.php';
 
 $fn = new Functions();
 
+session_unset();
 // Destroy the session
 session_destroy();
 

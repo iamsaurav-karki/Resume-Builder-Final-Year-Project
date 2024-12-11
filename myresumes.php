@@ -1,7 +1,7 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// if (session_status() == PHP_SESSION_NONE) {
+//     session_start();
+// }
 $title = "My Resumes | Resume Builder";
 require './assets/includes/header.php';
 require './assets/includes/navbar.php';
@@ -100,3 +100,4 @@ $(document).ready(function () {
     });
 });
 </script>
+

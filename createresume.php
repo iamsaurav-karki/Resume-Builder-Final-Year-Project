@@ -21,7 +21,7 @@ $fn->authPage();
                 <form action="actions/createresume.action.php" method="post" class="row g-3 p-3" style="position: relative;">
                     <div class="col-md-6">
                         <label class="form-label">Resume Title</label>
-                        <input type="text" name="resume_title" id="resume_title" placeholder="Web Developer" value="" class="form-control" required> 
+                        <input type="text" name="resume_title" id="resume_title" placeholder="Web Developer"  class="form-control" required> 
                        
                     </div>
                     <h5 class="mt-3 text-secondary"><i class="bi bi-person-badge"></i> Personal Information</h5>

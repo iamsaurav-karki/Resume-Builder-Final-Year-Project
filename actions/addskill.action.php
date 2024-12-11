@@ -2,70 +2,40 @@
 require '../assets/class/database.class.php';
 require '../assets/class/function.class.php';
 
-if($_POST){
-$post = $_POST;
+if ($_POST) {
+    $post = $_POST;
 
+    if ($post['resume_id'] && $post['skill']) {
+        $resumeid = $db->real_escape_string($post['resume_id']);
+        $skill = $db->real_escape_string($post['skill']);
+        $slug = $db->real_escape_string($post['slug']); // Retrieve slug for redirection
 
-if($post['resume_id'] && $post['skill']){
+        // Check for duplicate skill for the given resume
+        $checkQuery = "SELECT id FROM skills WHERE skill = '$skill' AND resume_id = $resumeid";
+        $result = $db->query($checkQuery);
 
-  
-  $resumeid = array_shift($post);
-  $post2 = $post;
-  unset($post['slug']);
-  $columns='';
-  $values='';
+        if ($result->num_rows > 0) {
+            $fn->setError('This skill is already added to the resume.');
+            $fn->redirect("../updateresume.php?resume=$slug");
+            exit;
+        }
 
-  foreach($post as $index=>$value){
-    $value= $db->real_escape_string($value);
-    $columns.=$index.',';
-    $values.="'$value',";
+        try {
+            // Insert skill into the database
+            $query = "INSERT INTO skills (skill, resume_id) VALUES ('$skill', $resumeid)";
+            $db->query($query);
 
-  }
-
-
-  $columns.='resume_id';
-  $values.=$resumeid;
-
-
-  try{
-
-    $query = "INSERT INTO skills";
-    $query.="($columns) ";
-    $query.=" VALUES($values)";
-
-  
-    
-  $db->query($query);
-
-  $fn->setAlert('Skills Added!');
-
-  $fn->redirect('../updateresume.php?resume='.$post2['slug']);
-
-
-  }catch(Exception $error){
-      $fn->setError($error->getMessage());
-    $fn->redirect('../updateresume.php?resume='.$post2['slug']);
-
-
-
-  }
-
-
-
-}else{
-  $fn->setError('please fill the form!');
-
-    $fn->redirect('../updateresume.php?resume='.$post2['slug']);
-
-
+            $fn->setAlert('Skill Added!');
+            $fn->redirect("../updateresume.php?resume=$slug");
+        } catch (Exception $error) {
+            $fn->setError($error->getMessage());
+            $fn->redirect("../updateresume.php?resume=$slug");
+        }
+    } else {
+        $fn->setError('Please fill the form!');
+        $fn->redirect('../updateresume.php');
+    }
+} else {
+    $fn->redirect('../updateresume.php');
 }
-}
-else {
-
-      $fn->redirect('../updateresume.php?resume='.$post2['slug']);
-
-}
-
-
-?>
 ?>

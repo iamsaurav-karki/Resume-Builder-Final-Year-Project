@@ -2,7 +2,7 @@
 // if (session_status() == PHP_SESSION_NONE) {
 //     session_start();
 // }
-// session_start();
+session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require '../assets/class/database.class.php';

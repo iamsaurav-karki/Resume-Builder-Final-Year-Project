@@ -27,11 +27,11 @@ $fn->authPage();
                     <h5 class="mt-3 text-secondary"><i class="bi bi-person-badge"></i> Personal Information</h5>
                     <div class="col-md-6">
                         <label class="form-label">Full Name</label>
-                        <input type="text" name="full_name" placeholder="saurav karki" class="form-control" required>
+                        <input type="text" name="full_name" placeholder="Ram Rai" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email_id" placeholder="saurav@abc.com" class="form-control" required>
+                        <input type="email" name="email_id" placeholder="ramrai@gmail.com" class="form-control" required>
                     </div>
                     <div class="col-12">
                     <label for="inputAddress" class="form-label"> Objective</label>

@@ -1,6 +1,5 @@
 <?php
 require './assets/class/database.class.php';
-
 require './assets/class/function.class.php';
 ?>
 

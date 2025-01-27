@@ -47,11 +47,11 @@ $skills = $skills->fetch_all(1);
                     <h5 class="mt-3 text-secondary"><i class="bi bi-person-badge"></i> Personal Information</h5>
                     <div class="col-md-6">
                         <label class="form-label">Full Name</label>
-                        <input type="text" name="full_name" value="<?=@$resume['full_name']?>" placeholder="Dev Ninja" class="form-control" required>
+                        <input type="text" name="full_name" value="<?=@$resume['full_name']?>" placeholder="Ram Rai" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email_id" value="<?=@$resume['email_id']?>" placeholder="dev@abc.com" class="form-control" required>
+                        <input type="email" name="email_id" value="<?=@$resume['email_id']?>" placeholder="ramrai@gmail.com" class="form-control" required>
                     </div>
                     <div class="col-12">
                         <label for="inputAddress" class="form-label"> Objective</label>
@@ -59,7 +59,7 @@ $skills = $skills->fetch_all(1);
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Mobile No</label>
-                        <input type="number" min="1111111111" name="mobile_no" value="<?=@$resume['mobile_no']?>" placeholder="9569569569" max="9999999999"
+                        <input type="number" min="1111111111" name="mobile_no" value="<?=@$resume['mobile_no']?>" placeholder="9869569569" max="9999999999"
                             class="form-control" required>
                     </div>
                     <div class="col-md-6">

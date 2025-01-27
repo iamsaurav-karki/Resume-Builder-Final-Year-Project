@@ -24,15 +24,15 @@ if ($_POST) {
         $authid = $fn->Auth()['id'];
 
         // Check for duplicate resume title for the user
-        $resumeTitle = $db->real_escape_string($post['resume_title']);
-        $checkQuery = "SELECT id FROM resumes WHERE resume_title = '$resumeTitle' AND user_id = $authid";
-        $result = $db->query($checkQuery);
+        // $resumeTitle = $db->real_escape_string($post['resume_title']);
+        // $checkQuery = "SELECT id FROM resumes WHERE resume_title = '$resumeTitle' AND user_id = $authid";
+        // $result = $db->query($checkQuery);
 
-        if ($result->num_rows > 0) {
-            $fn->setError('A resume with this title already exists. Please use a different title.');
-            $fn->redirect('../createresume.php');
-            exit;
-        }
+        // if ($result->num_rows > 0) {
+        //     $fn->setError('A resume with this title already exists. Please use a different title.');
+        //     $fn->redirect('../createresume.php');
+        //     exit;
+        // }
 
         // Prepare columns and values for insertion
         foreach ($post as $index => $value) {

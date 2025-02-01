@@ -147,7 +147,7 @@ $skills = $skills->fetch_all(1);
         <?php
     }
 
-    ?>
+       ?>
 
 
 
@@ -156,12 +156,13 @@ $skills = $skills->fetch_all(1);
         <table class="w-100">
             <tbody>
                 <tr>
-                    <td colspan="2" class="text-center fw-bold fs-4">Resume</td>
+                    <!-- <td colspan="2" class="text-center fw-bold fs-4">Resume</td> -->
+                    <td colspan="2" class="text-center fw-bold fs-4"><?=$resume['full_name']?></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="personal-info zsection">
-                        <div class="fw-bold name"><?=$resume['full_name']?></div>
+                    <td class="personal-info zsection"><br>
+                        <!-- <div class="fw-bold name"><?=$resume['full_name']?></div> -->
                         <div>Mobile : <span class="mobile">+977- <?=$resume['mobile_no']?></span></div>
                         <div>Email : <span class="email"><?=$resume['email_id']?></span></div>
                         <div>Address : <span class="address"><?=$resume['address']?></span></div>
@@ -182,19 +183,19 @@ $skills = $skills->fetch_all(1);
 
                     <?php
 
-if($exps){
+                        if($exps){
 
- foreach($exps as $exp){
+                         foreach($exps as $exp){
 
-?>
-<div class="experience mb-2">
+                          ?>
+                            <div class="experience mb-2">
                             <div class="fw-bold">- <span class="job-role"><?=$exp['position']?>
                             </div>
                             <div class="company"><?=$exp['company']?></div>
                             <div><span class="working-from"><?=$exp['started']?></span> – <span class="working-to"><?=$exp['ended']?></span></div>
                             <div class="work-description"><?=$exp['job_desc']?></div>
                         </div>
-<?php
+                       <?php
 
                         }
 
@@ -211,10 +212,7 @@ if($exps){
 
                     }
 
-
-                       ?>
-
-                        
+                       ?>  
 
                     </td>
                 </tr>
@@ -223,20 +221,20 @@ if($exps){
                     <td class="fw-bold align-top text-nowrap pr title">Education</td>
                     <td class="pb-3 educations">
 
- <?php
+                    <?php
 
-if($edus){
+                     if($edus){
 
- foreach($edus as $edu){
+                      foreach($edus as $edu){
 
-?>
- <div class="education mb-2">
+                         ?>
+                            <div class="education mb-2">
                             <div class="fw-bold">- <span class="course"><?=$edu['course']?></span></div>
                             <div class="institute"><?=$edu['institute']?></div>
                             <div><span class="working-from"><?=$edu['started']?></span> – <span class="working-to"><?=$edu['ended']?></span></div>
 
                         </div>
-<?php
+                        <?php
 
                         }
 
@@ -252,13 +250,7 @@ if($edus){
                          <?php
 
                     }
-
-
-                       ?>
-
-                       
-
-
+                    ?>
                     </td>
                 </tr>
 

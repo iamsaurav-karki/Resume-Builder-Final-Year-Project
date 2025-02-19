@@ -69,8 +69,6 @@ $fn->authPage();
                             <option>Sikh</option>
                             <option>Christian</option>
 
-
-
                         </select>
                     </div>
 
@@ -82,9 +80,6 @@ $fn->authPage();
                             <option>American</option>
                             <option>European</option>
                             <option>Others</option>
-
-
-
 
 
                         </select>

@@ -320,6 +320,7 @@ if($skills){
     </div>
 
                        <!-- Add  MODAL exp-->
+<!-- Add Experience Modal -->
 <div class="modal fade" id="addexp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -328,47 +329,145 @@ if($skills){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <form method="post" action="actions/addexperience.action.php" class="row g-3" onsubmit="return validateForm()">
+          <!-- Hidden fields for resume ID and slug -->
+          <input type="hidden" name="resume_id" value="<?=$resume['id']?>" />
+          <input type="hidden" name="slug" value="<?=$resume['slug']?>" />
 
-        <form method="post" action="actions/addexperience.action.php" class="row g-3">
-        <input type="hidden" name="resume_id" value="<?=$resume['id']?>" />
-        <input type="hidden" name="slug" value="<?=$resume['slug']?>" />
+          <!-- Position / Job Role -->
+          <div class="col-12">
+            <label for="position" class="form-label">Position / Job Role</label>
+            <input type="text" class="form-control" name="position" placeholder="Web Developer Consultant (2+ Years)" id="position" required>
+          </div>
 
+          <!-- Company -->
+          <div class="col-12">
+            <label for="company" class="form-label">Company</label>
+            <input type="text" name="company" placeholder="F1-Soft" class="form-control" id="company" required>
+          </div>
 
-  <div class="col-12">
-    <label for="inputEmail4" class="form-label">Position / Job Role</label>
-    <input type="text" class="form-control" name="position" placeholder="Web Developer Consultant (2+ Years)"id="inputEmail4" required>
-  </div>
-  <div class="col-12">
-    <label for="inputPassword4" class="form-label">Company</label>
-    <input type="text" name="company" placeholder="F1-Soft" class="form-control" id="inputPassword4" required>
-  </div>
+          <!-- Start Date -->
+          <div class="col-md-6">
+            <label for="started" class="form-label">Start Date</label>
+            <input type="date" name="started" class="form-control" id="started" required>
+          </div>
 
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Joined</label>
-    <input type="text" name="started" placeholder="July 2024" class="form-control" id="inputPassword4" required>
-  </div>
+          <!-- End Date -->
+          <div class="col-md-6">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" name="ended" class="form-control" id="endDate">
+          </div>
 
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Resigned</label>
-    <input type="text" name="ended" class="form-control" placeholder="Currently Working" id="inputPassword4" required>
-  </div>
+          <!-- Currently Working Checkbox -->
+          <div class="col-12">
+            <label for="currentlyWorking" class="form-label">
+              <input type="checkbox" name="currently_working" id="currentlyWorking" onchange="toggleEndDate()"> Currently Working
+            </label>
+          </div>
 
-  <div class="col-12">
-    <label for="inputPassword4" class="form-label">Job Description</label>
-    <textarea class="form-control" name="job_desc" required ></textarea>
-  </div>
+          <!-- Job Description -->
+          <div class="col-12">
+            <label for="job_desc" class="form-label">Job Description</label>
+            <textarea class="form-control" name="job_desc" id="job_desc" required></textarea>
+          </div>
 
-  <div class="col-12 text-end">
-    <button type="submit" class="btn btn-primary">Add Experience</button>
-  </div>
-</form>
-    
+          <!-- Submit Button -->
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">Add Experience</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
+<!-- JavaScript for Validation -->
+<script>
+function toggleEndDate() {
+    const currentlyWorking = document.getElementById('currentlyWorking');
+    const endDateInput = document.getElementById('endDate');
+
+    if (currentlyWorking.checked) {
+        endDateInput.disabled = true;
+        endDateInput.value = ''; // Clear the end date value
+    } else {
+        endDateInput.disabled = false;
+    }
+}
+
+function validateForm() {
+    const startDateInput = document.getElementById('started');
+    const endDateInput = document.getElementById('endDate');
+    const currentlyWorking = document.getElementById('currentlyWorking');
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+    // Validate Start Date
+    if (startDateInput.value > today) {
+        alert('Start date cannot be beyond today\'s date.');
+        startDateInput.value = ''; // Clear the invalid date
+        return false;
+    }
+
+    // Validate End Date (if not currently working)
+    if (!currentlyWorking.checked) {
+        if (!endDateInput.value) {
+            alert('Please provide an end date or select "Currently Working".');
+            return false;
+        }
+
+        if (endDateInput.value > today) {
+            alert('End date cannot be beyond today\'s date.');
+            endDateInput.value = ''; // Clear the invalid date
+            return false;
+        }
+
+        if (endDateInput.value < startDateInput.value) {
+            alert('End date cannot be before the start date.');
+            endDateInput.value = ''; // Clear the invalid date
+            return false;
+        }
+    } else {
+        // If currently working, ensure end date is empty
+        if (endDateInput.value) {
+            alert('End date must be empty if "Currently Working" is selected.');
+            return false;
+        }
+    }
+
+    return true; // Allow form submission if all validations pass
+}
+
+// Prevent manual input in date fields
+document.getElementById('started').addEventListener('input', function(e) {
+    const today = new Date().toISOString().split('T')[0];
+    if (e.target.value > today) {
+        alert('Start date cannot be beyond today\'s date.');
+        e.target.value = ''; // Clear the invalid date
+    }
+});
+
+document.getElementById('endDate').addEventListener('input', function(e) {
+    const today = new Date().toISOString().split('T')[0];
+    if (e.target.value > today) {
+        alert('End date cannot be beyond today\'s date.');
+        e.target.value = ''; // Clear the invalid date
+    }
+});
+
+// Ensure the End Date field is disabled when the page loads if "Currently Working" is checked
+document.addEventListener('DOMContentLoaded', function() {
+    const currentlyWorking = document.getElementById('currentlyWorking');
+    const endDateInput = document.getElementById('endDate');
+
+    if (currentlyWorking.checked) {
+        endDateInput.disabled = true;
+        endDateInput.value = ''; // Clear the end date value
+    }
+});
+</script>
+
                        <!-- Add  MODAL edu-->
+<!-- Add Education Modal -->
 <div class="modal fade" id="addedu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -377,41 +476,117 @@ if($skills){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <form method="post" action="actions/addeducation.action.php" class="row g-3" onsubmit="return validateEducationForm()">
+          <!-- Hidden fields for resume ID and slug -->
+          <input type="hidden" name="resume_id" value="<?=$resume['id']?>" />
+          <input type="hidden" name="slug" value="<?=$resume['slug']?>" />
 
-        <form method="post" action="actions/addeducation.action.php" class="row g-3">
-             <input type="hidden" name="resume_id" value="<?=$resume['id']?>" />
-        <input type="hidden" name="slug" value="<?=$resume['slug']?>" />
-  <div class="col-12">
-    <label for="inputEmail4" class="form-label">Course / Degree</label>
-    <input type="text" class="form-control" name="course" placeholder="BIT"id="inputEmail4" required>
-  </div>
-  <div class="col-12">
-    <label for="inputPassword4" class="form-label">Institute / College</label>
-    <input type="text" name="institute" placeholder="Amrit Campus" class="form-control" id="inputPassword4" required>
-  </div>
+          <!-- Course / Degree -->
+          <div class="col-12">
+            <label for="course" class="form-label">Course / Degree</label>
+            <input type="text" class="form-control" name="course" placeholder="BIT" id="course" required>
+          </div>
 
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Started</label>
-    <input type="text" name="started" placeholder="July 2024" class="form-control" id="inputPassword4" required>
-  </div>
+          <!-- Institute / College -->
+          <div class="col-12">
+            <label for="institute" class="form-label">Institute / College</label>
+            <input type="text" name="institute" placeholder="Amrit Campus" class="form-control" id="institute" required>
+          </div>
 
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Ended</label>
-    <input type="text" name="ended" class="form-control" placeholder="Currently Studying" id="inputPassword4" required>
-  </div>
+          <!-- Start Date -->
+          <div class="col-md-6">
+            <label for="edu_started" class="form-label">Started</label>
+            <input type="date" name="started" class="form-control" id="edu_started" max="<?= date('Y-m-d') ?>" required>
+          </div>
 
+          <!-- End Date -->
+          <div class="col-md-6">
+            <label for="edu_ended" class="form-label">Ended</label>
+            <input type="date" name="ended" class="form-control" id="edu_ended">
+          </div>
 
-  <div class="col-12 text-end">
-    <button type="submit" class="btn btn-primary">Add Education</button>
-  </div>
-</form>
-    
+          <!-- Currently Studying Checkbox -->
+          <div class="col-12">
+            <label for="currentlyStudying" class="form-label">
+              <input type="checkbox" name="currently_studying" id="currentlyStudying" onchange="toggleEduEndDate()"> Currently Studying
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">Add Education</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
+<!-- JavaScript for Validation -->
+<script>
+function toggleEduEndDate() {
+    const currentlyStudying = document.getElementById('currentlyStudying');
+    const endDateInput = document.getElementById('edu_ended');
+
+    if (currentlyStudying.checked) {
+        endDateInput.disabled = true;
+        endDateInput.value = ''; // Clear the end date value
+    } else {
+        endDateInput.disabled = false;
+    }
+}
+
+function validateEducationForm() {
+    const startDateInput = document.getElementById('edu_started');
+    const endDateInput = document.getElementById('edu_ended');
+    const currentlyStudying = document.getElementById('currentlyStudying');
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+    // Validate Start Date
+    if (startDateInput.value > today) {
+        alert('Start date cannot be beyond today\'s date.');
+        startDateInput.value = ''; // Clear the invalid date
+        return false;
+    }
+
+    // Only validate end date if NOT currently studying
+    if (!currentlyStudying.checked) {
+        if (!endDateInput.value) {
+            alert('Please provide an end date or select "Currently Studying".');
+            return false;
+        }
+
+        // Validate End Date is not beyond today's date
+        if (endDateInput.value > today) {
+            alert('End date cannot be beyond today\'s date.');
+            endDateInput.value = ''; // Clear the invalid date
+            return false;
+        }
+
+        // Validate End Date is not before Start Date
+        if (endDateInput.value < startDateInput.value) {
+            alert('End date cannot be before the start date.');
+            endDateInput.value = ''; // Clear the invalid date
+            return false;
+        }
+    }
+
+    return true; // Allow form submission if all validations pass
+}
+
+// Ensure the End Date field is disabled when the page loads if "Currently Studying" is checked
+document.addEventListener('DOMContentLoaded', function() {
+    const currentlyStudying = document.getElementById('currentlyStudying');
+    const endDateInput = document.getElementById('edu_ended');
+
+    if (currentlyStudying.checked) {
+        endDateInput.disabled = true;
+        endDateInput.value = ''; // Clear the end date value
+    }
+});
+</script>
                        <!-- Add  MODAL skill-->
+<!-- Add Skill Modal -->
 <div class="modal fade" id="addskill" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -420,26 +595,43 @@ if($skills){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <form method="post" action="actions/addskill.action.php" class="row g-3" onsubmit="return validateSkillForm()">
+          <!-- Hidden fields for resume ID and slug -->
+          <input type="hidden" name="resume_id" value="<?=$resume['id']?>" />
+          <input type="hidden" name="slug" value="<?=$resume['slug']?>" />
 
-        <form method="post" action="actions/addskill.action.php" class="row g-3">
-             <input type="hidden" name="resume_id" value="<?=$resume['id']?>" />
-        <input type="hidden" name="slug" value="<?=$resume['slug']?>" />
-  <div class="col-12">
-    <label for="inputEmail4" class="form-label">Skills</label>
-    <input type="text" class="form-control" name="skill" placeholder="Automation Testing With Selenium"id="inputEmail4" required>
-  </div>
+          <!-- Skill Input -->
+          <div class="col-12">
+            <label for="skill" class="form-label">Skills</label>
+            <input type="text" class="form-control" name="skill" placeholder="HTML,CSS,REACT" id="skill" required>
+          </div>
 
-
-  <div class="col-12 text-end">
-    <button type="submit" class="btn btn-primary">Add Skill</button>
-  </div>
-</form>
-    
+          <!-- Submit Button -->
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">Add Skill</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
+<!-- JavaScript for Validation -->
+<script>
+function validateSkillForm() {
+    const skillInput = document.getElementById('skill');
+    const skillValue = skillInput.value.trim();
+
+    // Validate if the skill field contains only strings separated by commas
+    if (!/^[a-zA-Z,\s]+$/.test(skillValue)) {
+        alert('Skills must be strings separated by commas (e.g., "Java, Python, Selenium").');
+        skillInput.value = ''; // Clear the invalid input
+        return false;
+    }
+
+    return true; // Allow form submission if validation passes
+}
+</script>
   <?php
 require'./assets/includes/footer.php';
 ?>

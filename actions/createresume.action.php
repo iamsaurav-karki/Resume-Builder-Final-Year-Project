@@ -5,6 +5,23 @@ require '../assets/class/function.class.php';
 if ($_POST) {
     $post = $_POST;
 
+     // Validate Date of Birth (DOB)
+    $dob = $post['dob'];
+    $currentDate = date('Y-m-d');
+    if ($dob > $currentDate) {
+        $fn->setError('Date of Birth cannot be in the future.');
+        $fn->redirect('../createresume.php');
+        exit;
+    }
+
+    // Validate Email
+    $email = $post['email_id'];
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $fn->setError('Please enter a valid email address.');
+        $fn->redirect('../createresume.php');
+        exit;
+    }
+
     if (
         !empty($post['full_name']) &&
         !empty($post['email_id']) &&

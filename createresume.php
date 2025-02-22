@@ -123,6 +123,30 @@ $fn->authPage();
         </div>
 
     </div>
+    <script>
+    document.querySelector('form').addEventListener('submit', function (event) {
+        const dobInput = document.querySelector('input[name="dob"]');
+        const emailInput = document.querySelector('input[name="email_id"]');
+
+        // Validate Date of Birth (DOB)
+        const dob = new Date(dobInput.value);
+        const currentDate = new Date();
+
+        if (dob > currentDate) {
+            alert('Date of Birth cannot be in the future.');
+            event.preventDefault();
+            return;
+        }
+
+        // Validate Email
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailInput.value)) {
+            alert('Please enter a valid email address.');
+            event.preventDefault();
+            return;
+        }
+    });
+</script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

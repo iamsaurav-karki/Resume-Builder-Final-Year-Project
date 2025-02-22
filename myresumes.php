@@ -54,12 +54,13 @@ $resumes = bubbleSort($resumes, 'resume_title');
                         <div class="col-12 col-md-6 p-2">
                             <div class="p-2 border rounded">
                                 <h5><?= htmlspecialchars($resume['resume_title']) ?></h5>
-                                <p class="small text-secondary m-0" style="font-size:12px"><i class="bi bi-clock-history"></i>
-                                    Last Updated <?= date('d M, Y ', strtotime($resume['updated_at'])) ?>
-                                </p>
+                                <p class="small text-secondary m-0" style="font-size:12px">
+                                <i class="bi bi-clock-history"></i>
+                                 Last Updated <?= date('d M, Y') ?>
+                                  </p>
                                 <div class="d-flex gap-2 mt-1">
                                     <a href="resume.php?resume=<?= $resume['slug'] ?>" target="_blank" class="text-decoration-none small"><i class="bi bi-file-text"></i> Open</a>
-                                    <a href="updateresume.php?resume=<?= $resume['slug'] ?>" class="text-decoration-none small"><i class="bi bi-pencil-square"></i> Edit</a>
+                                    <a href="updateresume.php?resume=<?= $resume['slug'] ?>" class="text-decoration-none small"><i class="bi bi-pencil-square"></i> Add more</a>
                                     <a href="actions/deleteresume.action.php?id=<?= $resume['id'] ?>" class="text-decoration-none small"><i class="bi bi-trash2"></i> Delete</a>
                                     <a href="actions/clonecv.action.php?resume=<?= $resume['slug'] ?>" class="text-decoration-none small"><i class="bi bi-copy"></i> Clone</a>
                                 </div>

@@ -35,7 +35,7 @@ if ($resumes) {
             <div class="p-2 border rounded">
                 <h5><?= htmlspecialchars($resume['resume_title']) ?></h5>
                 <p class="small text-secondary m-0" style="font-size:12px"><i class="bi bi-clock-history"></i>
-                    Last Updated <?= date('d M, Y ', strtotime($resume['updated_at'])) ?>
+                    Last Updated <?= date('d M, Y') ?>
                 </p>
                 <div class="d-flex gap-2 mt-1">
                     <a href="resume.php?resume=<?= $resume['slug'] ?>" target="_blank" class="text-decoration-none small"><i class="bi bi-file-text"></i> Open</a>

@@ -1,0 +1,488 @@
+Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => BIT
+    [institute] => ascol
+    [started] => 2025-02-02
+    [ended] => 
+    [currently_studying] => on
+)
+INSERT INTO educations (resume_id, course, institute, started, ended, currently_studying) 
+                     VALUES (2, 'BIT', 'ascol', '2025-02-02', NULL, 1)
+Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => sdfs
+    [institute] => dfsf
+    [started] => 2025-02-04
+    [ended] => 
+    [currently_studying] => on
+)
+INSERT INTO educations (resume_id, course, institute, started, ended, currently_studying) 
+                     VALUES (2, 'sdfs', 'dfsf', '2025-02-04', NULL, 1)
+Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => dsfdsfs
+    [institute] => sdfsf
+    [started] => 2023-01-11
+    [ended] => 
+    [currently_studying] => on
+)
+INSERT INTO educations (resume_id, course, institute, started, ended, currently_studying) 
+                     VALUES (2, 'dsfdsfs', 'sdfsf', '2023-01-11', NULL, 1)
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => test
+    [institute] => test
+    [started] => 2025-02-03
+    [ended] => 
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'test',
+            'test',
+            '2025-02-03',
+            NULL,
+            1
+        )
+Exception: Column 'ended' cannot be null
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => test
+    [institute] => test
+    [started] => 2025-02-02
+    [ended] => 
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'test',
+            'test',
+            '2025-02-02',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => BIT
+    [institute] => ascol
+    [started] => 2025-02-02
+    [ended] => 
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'BIT',
+            'ascol',
+            '2025-02-02',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => test
+    [institute] => test
+    [started] => 2025-02-11
+    [ended] => 
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'test',
+            'test',
+            '2025-02-11',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => bit
+    [institute] => ascol
+    [started] => 2025-01-26
+    [ended] => 
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'bit',
+            'ascol',
+            '2025-01-26',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => BIT
+    [institute] => ascol
+    [started] => 2025-02-10
+    [ended] => 
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'BIT',
+            'ascol',
+            '2025-02-10',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [degree] => csit
+    [institution] => patan
+    [edu_started] => 2025-02-10
+    [currently_studying] => on
+)
+
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [degree] => bit
+    [institution] => ascol
+    [edu_started] => 2025-02-10
+    [currently_studying] => on
+)
+
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => bit
+    [institute] => ascol
+    [started] => 2025-02-18
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'bit',
+            'ascol',
+            '2025-02-18',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => CSIT
+    [institute] => bhaktapur
+    [started] => 2025-02-02
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'CSIT',
+            'bhaktapur',
+            '2025-02-02',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => CSIT
+    [institute] => Padma Kanya
+    [started] => 2025-02-21
+    [ended] => 2025-02-18
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'CSIT',
+            'Padma Kanya',
+            '2025-02-21',
+            '2025-02-18',
+            0
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => ss
+    [institute] => ss
+    [started] => 2025-02-18
+    [ended] => 2025-02-10
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'ss',
+            'ss',
+            '2025-02-18',
+            '2025-02-10',
+            0
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => sdf
+    [institute] => sdf
+    [started] => 2025-02-17
+    [ended] => 2025-02-16
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'sdf',
+            'sdf',
+            '2025-02-17',
+            '2025-02-16',
+            0
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => test
+    [institute] => test
+    [started] => 2025-02-10
+    [ended] => 2025-02-09
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'test',
+            'test',
+            '2025-02-10',
+            '2025-02-09',
+            0
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => bsc
+    [institute] => tu
+    [started] => 2025-02-19
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'bsc',
+            'tu',
+            '2025-02-19',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 2
+    [slug] => Y0mG41X4UT1k98M9
+    [course] => bscit
+    [institute] => ascol
+    [started] => 2025-02-09
+    [ended] => 2025-02-19
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            2,
+            'bscit',
+            'ascol',
+            '2025-02-09',
+            '2025-02-19',
+            0
+        )
+POST data: Array
+(
+    [resume_id] => 4
+    [slug] => SkZptI7X7l81y50W
+    [course] => BIT
+    [institute] => ASCOL
+    [started] => 2022-02-22
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            4,
+            'BIT',
+            'ASCOL',
+            '2022-02-22',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 10
+    [slug] => RVPqehTmYFH18c3t
+    [course] => BIT
+    [institute] => ascil
+    [started] => 2025-02-16
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            10,
+            'BIT',
+            'ascil',
+            '2025-02-16',
+            NULL,
+            1
+        )
+POST data: Array
+(
+    [resume_id] => 14
+    [slug] => xPQH8KAs1DLYF4G5
+    [course] => BIT
+    [institute] => ASCOL
+    [started] => 2022-01-02
+    [currently_studying] => on
+)
+
+SQL Query: INSERT INTO educations (
+            resume_id, 
+            course, 
+            institute, 
+            started, 
+            ended, 
+            currently_studying
+        ) VALUES (
+            14,
+            'BIT',
+            'ASCOL',
+            '2022-01-02',
+            NULL,
+            1
+        )

@@ -181,78 +181,62 @@ $skills = $skills->fetch_all(1);
                     <td class="fw-bold align-top text-nowrap pr title">Experience</td>
                     <td class="pb-3 experiences">
 
-                    <?php
-
-                        if($exps){
-
-                         foreach($exps as $exp){
-
-                          ?>
-                            <div class="experience mb-2">
-                            <div class="fw-bold">- <span class="job-role"><?=$exp['position']?>
-                            </div>
-                            <div class="company"><?=$exp['company']?></div>
-                            <div><span class="working-from"><?=$exp['started']?></span> – <span class="working-to"><?=$exp['ended']?></span></div>
-                            <div class="work-description"><?=$exp['job_desc']?></div>
-                        </div>
-                       <?php
-
-                        }
-
-                    }else{
-
-                        ?>
-                        <div class="experience mb-2">
-                            <div class="company">No experience to show.</div>
-                            
-                        </div>
-
-
-                         <?php
-
-                    }
-
-                       ?>  
+                                 <?php
+                            if ($exps) {
+                                foreach ($exps as $exp) {
+                                    ?>
+                                    <div class="experience mb-2">
+                                        <div class="fw-bold">- <span class="job-role"><?= $exp['position'] ?></span></div>
+                                        <div class="company"><?= $exp['company'] ?></div>
+                                        <div>
+                                            <span class="working-from"><?= $exp['started'] ?></span> – 
+                                            <span class="working-to"><?= $exp['currently_working'] ? 'Present' : $exp['ended'] ?></span>
+                                        </div>
+                                        <div class="work-description"><?= $exp['job_desc'] ?></div>
+                                    </div>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="experience mb-2">
+                                    <div class="company">No experience to show.</div>
+                                </div>
+                                <?php
+                            }
+                            ?> 
 
                     </td>
                 </tr>
 
                 <tr class="education-section zsection">
-                    <td class="fw-bold align-top text-nowrap pr title">Education</td>
-                    <td class="pb-3 educations">
-
-                    <?php
-
-                     if($edus){
-
-                      foreach($edus as $edu){
-
-                         ?>
-                            <div class="education mb-2">
-                            <div class="fw-bold">- <span class="course"><?=$edu['course']?></span></div>
-                            <div class="institute"><?=$edu['institute']?></div>
-                            <div><span class="working-from"><?=$edu['started']?></span> – <span class="working-to"><?=$edu['ended']?></span></div>
-
-                        </div>
-                        <?php
-
-                        }
-
-                    }else{
-
-                        ?>
-                        <div class="education mb-2">
-                            <div class="institute">No education to show.</div>
-                            
-                        </div>
-
-
-                         <?php
-
-                    }
-                    ?>
-                    </td>
-                </tr>
+    <td class="fw-bold align-top text-nowrap pr title">Education</td>
+    <td class="pb-3 educations">
+        <?php
+        if ($edus) {
+            foreach ($edus as $edu) {
+                ?>
+                <div class="education mb-2">
+                    <div class="fw-bold">- <span class="course"><?= $edu['course'] ?></span></div>
+                    <div class="institute"><?= $edu['institute'] ?></div>
+                    <div>
+                        <span class="working-from"><?= $edu['started'] ?></span> – 
+                        <span class="working-to">
+                            <?= $edu['currently_studying'] ? "Present" : $edu['ended'] ?>
+                        </span>
+                    </div>
+                </div>
+                <?php
+            }
+        } else {
+            ?>
+            <div class="education mb-2">
+                <div class="institute">No education to show.</div>
+            </div>
+            <?php
+        }
+        ?>
+    </td>
+</tr>
 
                 <tr class="skills-section zsection">
                     <td class="fw-bold align-top text-nowrap pr title">Skills</td>
@@ -340,7 +324,7 @@ $skills = $skills->fetch_all(1);
             </tbody>
         </table>
          <div class="d-flex justify-content-between">
-                    <div class="px-3">Date : <?= date('d F, Y', strtotime($resume['updated_at'])) ?></div>
+                   <div class="px-3">Date : <?= date('d F, Y') ?></div>
                     <!-- 
                     <div class="px-3 name text-end"><?=$resume['full_name']?></div>
                     -->

@@ -131,6 +131,63 @@ $skills = $skills->fetch_all(1);
                         <label for="inputAddress" class="form-label"> Address</label>
                         <input type="text" name="address" value="<?=@$resume['address']?>" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
                     </div>
+
+                    <script>
+                      // Generic cleaning function
+                      function cleanInput(input, options) {
+                          let value = input.value.trim();
+                      
+                          // Remove disallowed characters based on the options
+                          value = value.replace(options.regex, '');
+                      
+                          // Split by commas and process each part
+                          value = value.split(/,+/)
+                              .map(part => {
+                                  // Trim spaces and hyphens (if allowed)
+                                  let cleaned = part.trim();
+                                  // Collapse multiple spaces to single space
+                                  cleaned = cleaned.replace(/\s+/g, ' ');
+                                  // Collapse multiple hyphens to single hyphen (if allowed)
+                                  if (options.allowHyphen) {
+                                      cleaned = cleaned.replace(/-+/g, '-');
+                                  }
+                                  return cleaned;
+                              })
+                              .filter(part => part !== '') // Remove empty parts
+                              .join(', '); // Join with comma + space
+                            
+                          // Remove any remaining leading/trailing commas or spaces
+                          value = value.replace(/^[, ]+|[, ]+$/g, '');
+                            
+                          input.value = value;
+                      }
+                    
+                      // Configuration for hobbies and languages
+                      const hobbiesLanguagesConfig = {
+                          regex: /[^a-zA-Z,\s]/g, // Allow letters, commas, and spaces
+                          allowHyphen: false, // Disallow hyphens
+                      };
+                    
+                      // Configuration for addresses
+                      const addressConfig = {
+                          regex: /[^a-zA-Z0-9,\s-]/g, // Allow letters, numbers, commas, spaces, and hyphens
+                          allowHyphen: true, // Allow hyphens
+                      };
+                    
+                      // Attach the cleaning function to input events
+                      document.querySelector('input[name="hobbies"]').addEventListener('blur', function () {
+                          cleanInput(this, hobbiesLanguagesConfig);
+                      });
+                    
+                      document.querySelector('input[name="languages"]').addEventListener('blur', function () {
+                          cleanInput(this, hobbiesLanguagesConfig);
+                      });
+                    
+                      document.querySelector('input[name="address"]').addEventListener('blur', function () {
+                          cleanInput(this, addressConfig);
+                      });
+                    </script>
+
                     <hr>
                     <div class="d-flex justify-content-between">
                         <h5 class=" text-secondary"><i class="bi bi-briefcase"></i> Experience</h5>

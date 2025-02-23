@@ -634,19 +634,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- JavaScript for Validation -->
 <script>
-function validateSkillForm() {
-    const skillInput = document.getElementById('skill');
-    const skillValue = skillInput.value.trim();
 
-    // Validate if the skill field contains only strings separated by commas
-    if (!/^[a-zA-Z,\s]+$/.test(skillValue)) {
-        alert('Skills must be strings separated by commas (e.g., "Java, Python, Selenium").');
-        skillInput.value = ''; // Clear the invalid input
-        return false;
+// This function sanitizes the input in real time.
+function sanitizeSkillInput(input) {
+    let value = input.value;
+
+    // 1. Remove disallowed characters (allow only letters, spaces, commas)
+    value = value.replace(/[^a-zA-Z\s,]/g, '');
+
+    // 2. Remove any leading comma(s) and trailing comma(s)
+    value = value.replace(/^[,\s]+/, '').replace(/[,\s]+$/, '');
+
+    // 3. Replace two or more commas (with any spaces in between) with a single comma
+    value = value.replace(/(,\s*){2,}/g, ',');
+
+    input.value = value;
+  }
+
+  // Final check when submitting the form
+  function validateSkillForm() {
+    const skillInput = document.getElementById('skill');
+    let value = skillInput.value;
+
+    // Perform the same cleanup as the real-time function to be sure
+    value = value.replace(/[^a-zA-Z\s,]/g, '');
+    value = value.replace(/^[,\s]+/, '').replace(/[,\s]+$/, '');
+    value = value.replace(/(,\s*){2,}/g, ',');
+
+    // Update the input with the cleaned value
+    skillInput.value = value;
+
+    // Optionally, you can check if the field is empty after cleanup
+    if (value.trim() === '') {
+      alert('Please enter at least one valid skill.');
+      return false;
     }
 
-    return true; // Allow form submission if validation passes
-}
+    return true;
+  }
 </script>
   <?php
 require'./assets/includes/footer.php';

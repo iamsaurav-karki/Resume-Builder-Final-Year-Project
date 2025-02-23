@@ -124,6 +124,15 @@ $fn->authPage();
 
     </div>
     <script>
+    // Set the max attribute dynamically for Date of Birth
+    const today = new Date();
+    const minAge = 15;
+    const maxDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+    const formattedMaxDate = maxDate.toISOString().split('T')[0];
+
+    // Apply the max attribute to the DOB input field
+    document.querySelector('input[name="dob"]').setAttribute('max', formattedMaxDate);
+    
     document.querySelector('form').addEventListener('submit', function (event) {
         const dobInput = document.querySelector('input[name="dob"]');
         const emailInput = document.querySelector('input[name="email_id"]');
@@ -134,6 +143,13 @@ $fn->authPage();
 
         if (dob > currentDate) {
             alert('Date of Birth cannot be in the future.');
+            event.preventDefault();
+            return;
+        }
+
+        // Check if the user is at least 15 years old
+        if (dob > maxDate) {
+            alert('You must be at least 15 years old.');
             event.preventDefault();
             return;
         }

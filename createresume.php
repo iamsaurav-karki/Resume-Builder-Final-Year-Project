@@ -141,7 +141,36 @@ $fn->authPage();
                     </div>
 
                     <script>
-                        //
+                        function cleanAddressInput(input) {
+                            let value = input.value.trim();
+                        
+                            // Allow letters, numbers, commas, spaces, and hyphens
+                            value = value.replace(/[^a-zA-Z0-9,\s-]/g, '');
+                        
+                            // Split by commas and process each part
+                            value = value.split(/,+/)
+                                .map(part => {
+                                    // Trim spaces and hyphens from both ends
+                                    let cleaned = part.trim();
+                                    // Collapse multiple spaces to single space
+                                    cleaned = cleaned.replace(/\s+/g, ' ');
+                                    // Collapse multiple hyphens to single hyphen
+                                    cleaned = cleaned.replace(/-+/g, '-');
+                                    return cleaned;
+                                })
+                                .filter(part => part !== '') // Remove empty parts
+                                .join(', '); // Join with comma + space
+                            
+                            // Remove any remaining leading/trailing commas or spaces
+                            value = value.replace(/^[, ]+|[, ]+$/g, '');
+                            
+                            input.value = value;
+                        }
+                    
+                        // Attach the cleaning function to address input
+                        document.querySelector('input[name="address"]').addEventListener('blur', function() {
+                            cleanAddressInput(this);
+                        });
                     </script>
 
 

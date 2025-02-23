@@ -383,6 +383,15 @@ if($skills){
 
 <!-- JavaScript for Validation -->
 <script>
+    // Set the max attribute dynamically for Date of Birth
+    const today = new Date();
+    const minAge = 15;
+    const maxDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+    const formattedMaxDate = maxDate.toISOString().split('T')[0];
+
+    // Apply the max attribute to the DOB input field
+    document.querySelector('input[name="dob"]').setAttribute('max', formattedMaxDate);
+    
 function toggleEndDate() {
     const currentlyWorking = document.getElementById('currentlyWorking');
     const endDateInput = document.getElementById('endDate');

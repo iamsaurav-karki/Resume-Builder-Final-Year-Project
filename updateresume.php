@@ -391,7 +391,14 @@ if($skills){
 
     // Apply the max attribute to the DOB input field
     document.querySelector('input[name="dob"]').setAttribute('max', formattedMaxDate);
-    
+
+    // Set today's date in YYYY-MM-DD format
+    const presentDate = today.toISOString().split('T')[0];
+
+    // Set the max attribute for the start and end date inputs
+    document.getElementById('started').setAttribute('max', presentDate);
+    document.getElementById('endDate').setAttribute('max', presentDate);
+
 function toggleEndDate() {
     const currentlyWorking = document.getElementById('currentlyWorking');
     const endDateInput = document.getElementById('endDate');

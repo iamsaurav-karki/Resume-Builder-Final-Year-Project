@@ -106,11 +106,43 @@ $fn->authPage();
                         <input type="text" name="languages" placeholder="Nepali,English" class="form-control" required>
                     </div>
 
+                    <script>
+                        function cleanInput(input) {
+                            let value = input.value.trim();
+                        
+                            // Remove special characters except commas, spaces, and letters
+                            value = value.replace(/[^a-zA-Z,\s]/g, '');
+                        
+                            // Split by commas, process each part, and join with commas and a space
+                            value = value.split(/,+/)
+                                .map(part => part.trim().replace(/\s+/g, ' ')) // Trim and collapse spaces in each part
+                                .filter(part => part !== '') // Remove empty parts
+                                .join(', '); // Join valid parts with a comma and a space
+                        
+                            // Remove any remaining leading/trailing commas or spaces (for cases like empty input after processing)
+                            value = value.replace(/^[, ]+|[, ]+$/g, '');
+                        
+                            input.value = value;
+                        }
+                    
+                        // Attach the cleaning function to input events
+                        document.querySelector('input[name="hobbies"]').addEventListener('blur', function () {
+                            cleanInput(this);
+                        });
+                    
+                        document.querySelector('input[name="languages"]').addEventListener('blur', function () {
+                            cleanInput(this);
+                        });
+                    </script>
+
                     <div class="col-12">
                         <label for="inputAddress" class="form-label"> Address</label>
                         <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Lainchaur,Kathmandu" required>
                     </div>
 
+                    <script>
+                        //
+                    </script>
 
 
                     <div class="col-12 text-end">

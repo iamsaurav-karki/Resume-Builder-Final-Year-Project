@@ -106,73 +106,10 @@ $fn->authPage();
                         <input type="text" name="languages" placeholder="Nepali,English" class="form-control" required>
                     </div>
 
-                    <script>
-                        function cleanInput(input) {
-                            let value = input.value.trim();
-                        
-                            // Remove special characters except commas, spaces, and letters
-                            value = value.replace(/[^a-zA-Z,\s]/g, '');
-                        
-                            // Split by commas, process each part, and join with commas and a space
-                            value = value.split(/,+/)
-                                .map(part => part.trim().replace(/\s+/g, ' ')) // Trim and collapse spaces in each part
-                                .filter(part => part !== '') // Remove empty parts
-                                .join(', '); // Join valid parts with a comma and a space
-                        
-                            // Remove any remaining leading/trailing commas or spaces (for cases like empty input after processing)
-                            value = value.replace(/^[, ]+|[, ]+$/g, '');
-                        
-                            input.value = value;
-                        }
-                    
-                        // Attach the cleaning function to input events
-                        document.querySelector('input[name="hobbies"]').addEventListener('blur', function () {
-                            cleanInput(this);
-                        });
-                    
-                        document.querySelector('input[name="languages"]').addEventListener('blur', function () {
-                            cleanInput(this);
-                        });
-                    </script>
-
                     <div class="col-12">
                         <label for="inputAddress" class="form-label"> Address</label>
                         <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Lainchaur,Kathmandu" required>
                     </div>
-
-                    <script>
-                        function cleanAddressInput(input) {
-                            let value = input.value.trim();
-                        
-                            // Allow letters, numbers, commas, spaces, and hyphens
-                            value = value.replace(/[^a-zA-Z0-9,\s-]/g, '');
-                        
-                            // Split by commas and process each part
-                            value = value.split(/,+/)
-                                .map(part => {
-                                    // Trim spaces and hyphens from both ends
-                                    let cleaned = part.trim();
-                                    // Collapse multiple spaces to single space
-                                    cleaned = cleaned.replace(/\s+/g, ' ');
-                                    // Collapse multiple hyphens to single hyphen
-                                    cleaned = cleaned.replace(/-+/g, '-');
-                                    return cleaned;
-                                })
-                                .filter(part => part !== '') // Remove empty parts
-                                .join(', '); // Join with comma + space
-                            
-                            // Remove any remaining leading/trailing commas or spaces
-                            value = value.replace(/^[, ]+|[, ]+$/g, '');
-                            
-                            input.value = value;
-                        }
-                    
-                        // Attach the cleaning function to address input
-                        document.querySelector('input[name="address"]').addEventListener('blur', function() {
-                            cleanAddressInput(this);
-                        });
-                    </script>
-
 
                     <div class="col-12 text-end">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Add
@@ -184,6 +121,158 @@ $fn->authPage();
         </div>
 
     </div>
+
+    <script>
+    // Generic cleaning function
+    function cleanInput(input, options) {
+        let value = input.value.trim();
+
+        // Remove disallowed characters based on the options
+        value = value.replace(options.regex, '');
+
+        // Process based on the input type
+        if (options.isEmail) {
+            // For email fields
+            // Validate email format using regex
+            const emailRegex = /^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,4}$/;
+            if (!emailRegex.test(value)) {
+                // If email is invalid, clear the input or show an error
+                input.value = '';
+                alert('Please enter a valid email address.');
+                return;
+            }
+        } else if (options.isParagraph) {
+            // For paragraph fields (e.g., objective, job description)
+            // Remove everything before the first letter
+            const firstLetterIndex = value.search(/[a-zA-Z]/);
+            value = firstLetterIndex === -1 ? '' : value.slice(firstLetterIndex);
+
+            // Collapse multiple full stops into a single full stop
+            value = value.replace(/\.+/g, '.'); // Fix consecutive full stops
+
+            // Remove everything after last period and ensure ending
+            const lastPeriodIndex = value.lastIndexOf('.');
+            if (lastPeriodIndex !== -1) {
+                value = value.substring(0, lastPeriodIndex + 1);
+            } else if (value.length > 0) {
+                value += '.'; // Add period if missing
+            }
+
+            // Collapse multiple spaces and clean punctuation spacing
+            value = value.replace(/\s+/g, ' ')
+                         .replace(/,(\S)/g, ', $1') // Ensure space after comma
+                         .replace(/\.(\S)/g, '. $1'); // Ensure space after period
+
+            // Collapse multiple hyphens to single hyphen (if allowed)
+            if (options.allowHyphen) {
+                value = value.replace(/-+/g, '-');
+            }
+        } else if (options.allowComma) {
+            // For inputs that allow commas (e.g., hobbies, languages, addresses, skills)
+            value = value.split(/,+/)
+                .map(part => {
+                    // Trim spaces and hyphens (if allowed)
+                    let cleaned = part.trim();
+                    // Collapse multiple spaces to single space
+                    cleaned = cleaned.replace(/\s+/g, ' ');
+                    // Collapse multiple hyphens to single hyphen (if allowed)
+                    if (options.allowHyphen) {
+                        cleaned = cleaned.replace(/-+/g, '-');
+                    }
+                    return cleaned;
+                })
+                .filter(part => part !== '') // Remove empty parts
+                .join(', '); // Join with comma + space
+
+            // Remove any remaining leading/trailing commas or spaces
+            value = value.replace(/^[, ]+|[, ]+$/g, '');
+        } else {
+            // For inputs that do not allow commas (e.g., resume title, full name, course, institute, position)
+            // Collapse multiple spaces to single space
+            value = value.replace(/\s+/g, ' ');
+        }
+
+        input.value = value;
+    }
+
+    // Configuration objects
+    const hobbiesLanguagesConfig = {
+        regex: /[^a-zA-Z,\s]/g,
+        allowComma: true,
+        allowHyphen: false,
+    };
+
+    const addressConfig = {
+        regex: /[^a-zA-Z0-9,\s-]/g,
+        allowComma: true,
+        allowHyphen: true,
+    };
+
+    const nameTitleConfig = {
+        regex: /[^a-zA-Z\s]/g, // Allow only letters and spaces
+        allowComma: false,
+        allowHyphen: false,
+    };
+
+    const companyConfig = {
+        regex: /[^a-zA-Z0-9\s]/g, // Allow letters, numbers, and spaces
+        allowComma: false,
+        allowHyphen: false,
+    };
+
+    const skillConfig = {
+        regex: /[^a-zA-Z0-9,\s]/g,
+        allowComma: true,
+        allowHyphen: false,
+    };
+
+    const objectiveConfig = {
+        regex: /[^a-zA-Z,.\s-]/g, // Allow letters, commas, periods, spaces, and hyphens
+        isParagraph: true, // Special flag for paragraph handling
+        allowHyphen: true // Allow hyphens
+    };
+
+    const emailConfig = {
+        regex: /[^\w.@-]/g, // Allow letters, numbers, underscores, periods, hyphens, and @
+        isEmail: true // Special flag for email handling
+    };
+
+    // List of validated inputs and their configurations
+    const validatedInputs = [
+        { name: 'hobbies', config: hobbiesLanguagesConfig },
+        { name: 'languages', config: hobbiesLanguagesConfig },
+        { name: 'address', config: addressConfig },
+        { name: 'resume_title', config: nameTitleConfig },
+        { name: 'full_name', config: nameTitleConfig },
+        { name: 'skill', config: skillConfig },
+        { name: 'objective', config: objectiveConfig },
+        { name: 'course', config: nameTitleConfig },
+        { name: 'institute', config: nameTitleConfig },
+        { name: 'position', config: nameTitleConfig },
+        { name: 'company', config: companyConfig },
+        { name: 'job_desc', config: objectiveConfig },
+        { name: 'email_id', config: emailConfig }, // Add email input
+    ];
+
+    // Attach blur event listeners dynamically (works for modal inputs)
+    document.addEventListener('blur', function (event) {
+        const input = event.target;
+        const validatedInput = validatedInputs.find(item => input.name === item.name);
+        if (validatedInput) {
+            cleanInput(input, validatedInput.config);
+        }
+    }, true); // Use capturing phase to catch modal inputs
+
+    // Handle form submissions from ALL forms
+    document.addEventListener('submit', function (event) {
+        // Clean all inputs before submission
+        validatedInputs.forEach(({ name, config }) => {
+            const input = document.querySelector(`[name="${name}"]`); // Works for both input and textarea
+            if (input) cleanInput(input, config);
+        });
+    });
+</script>
+
     <script>
     // Set the max attribute dynamically for Date of Birth
     const today = new Date();

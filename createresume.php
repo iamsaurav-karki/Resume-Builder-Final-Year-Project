@@ -32,6 +32,7 @@ $fn->authPage();
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
                         <input type="email" name="email_id" placeholder="ramrai@gmail.com" class="form-control" required>
+                        <div id="email-error" class="text-danger" style="display: none;">Please enter a valid email address.</div>
                     </div>
                     <div class="col-12">
                     <label for="inputAddress" class="form-label"> Objective</label>
@@ -45,7 +46,8 @@ $fn->authPage();
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Date Of Birth</label>
-                        <input type="date" class="form-control" name="dob" required>
+                        <input type="date" class="form-control" name="dob" id="dob" required>
+                        <div id="dob-error" class="text-danger" style="display: none;"></div>
                     </div>
 
                     <div class="col-md-6">
@@ -122,197 +124,9 @@ $fn->authPage();
 
     </div>
 
-    <script>
-    // Generic cleaning function
-    function cleanInput(input, options) {
-        let value = input.value.trim();
-
-        // Remove disallowed characters based on the options
-        value = value.replace(options.regex, '');
-
-        // Process based on the input type
-        if (options.isEmail) {
-            // For email fields
-            // Validate email format using regex
-            const emailRegex = /^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,4}$/;
-            if (!emailRegex.test(value)) {
-                // If email is invalid, clear the input or show an error
-                input.value = '';
-                alert('Please enter a valid email address.');
-                return;
-            }
-        } else if (options.isParagraph) {
-            // For paragraph fields (e.g., objective, job description)
-            // Remove everything before the first letter
-            const firstLetterIndex = value.search(/[a-zA-Z]/);
-            value = firstLetterIndex === -1 ? '' : value.slice(firstLetterIndex);
-
-            // Collapse multiple full stops into a single full stop
-            value = value.replace(/\.+/g, '.'); // Fix consecutive full stops
-
-            // Remove everything after last period and ensure ending
-            const lastPeriodIndex = value.lastIndexOf('.');
-            if (lastPeriodIndex !== -1) {
-                value = value.substring(0, lastPeriodIndex + 1);
-            } else if (value.length > 0) {
-                value += '.'; // Add period if missing
-            }
-
-            // Collapse multiple spaces and clean punctuation spacing
-            value = value.replace(/\s+/g, ' ')
-                         .replace(/,(\S)/g, ', $1') // Ensure space after comma
-                         .replace(/\.(\S)/g, '. $1'); // Ensure space after period
-
-            // Collapse multiple hyphens to single hyphen (if allowed)
-            if (options.allowHyphen) {
-                value = value.replace(/-+/g, '-');
-            }
-        } else if (options.allowComma) {
-            // For inputs that allow commas (e.g., hobbies, languages, addresses, skills)
-            value = value.split(/,+/)
-                .map(part => {
-                    // Trim spaces and hyphens (if allowed)
-                    let cleaned = part.trim();
-                    // Collapse multiple spaces to single space
-                    cleaned = cleaned.replace(/\s+/g, ' ');
-                    // Collapse multiple hyphens to single hyphen (if allowed)
-                    if (options.allowHyphen) {
-                        cleaned = cleaned.replace(/-+/g, '-');
-                    }
-                    return cleaned;
-                })
-                .filter(part => part !== '') // Remove empty parts
-                .join(', '); // Join with comma + space
-
-            // Remove any remaining leading/trailing commas or spaces
-            value = value.replace(/^[, ]+|[, ]+$/g, '');
-        } else {
-            // For inputs that do not allow commas (e.g., resume title, full name, course, institute, position)
-            // Collapse multiple spaces to single space
-            value = value.replace(/\s+/g, ' ');
-        }
-
-        input.value = value;
-    }
-
-    // Configuration objects
-    const hobbiesLanguagesConfig = {
-        regex: /[^a-zA-Z,\s]/g,
-        allowComma: true,
-        allowHyphen: false,
-    };
-
-    const addressConfig = {
-        regex: /[^a-zA-Z0-9,\s-]/g,
-        allowComma: true,
-        allowHyphen: true,
-    };
-
-    const nameTitleConfig = {
-        regex: /[^a-zA-Z\s]/g, // Allow only letters and spaces
-        allowComma: false,
-        allowHyphen: false,
-    };
-
-    const companyConfig = {
-        regex: /[^a-zA-Z0-9\s]/g, // Allow letters, numbers, and spaces
-        allowComma: false,
-        allowHyphen: false,
-    };
-
-    const skillConfig = {
-        regex: /[^a-zA-Z0-9,\s]/g,
-        allowComma: true,
-        allowHyphen: false,
-    };
-
-    const objectiveConfig = {
-        regex: /[^a-zA-Z,.\s-]/g, // Allow letters, commas, periods, spaces, and hyphens
-        isParagraph: true, // Special flag for paragraph handling
-        allowHyphen: true // Allow hyphens
-    };
-
-    const emailConfig = {
-        regex: /[^\w.@-]/g, // Allow letters, numbers, underscores, periods, hyphens, and @
-        isEmail: true // Special flag for email handling
-    };
-
-    // List of validated inputs and their configurations
-    const validatedInputs = [
-        { name: 'hobbies', config: hobbiesLanguagesConfig },
-        { name: 'languages', config: hobbiesLanguagesConfig },
-        { name: 'address', config: addressConfig },
-        { name: 'resume_title', config: nameTitleConfig },
-        { name: 'full_name', config: nameTitleConfig },
-        { name: 'skill', config: skillConfig },
-        { name: 'objective', config: objectiveConfig },
-        { name: 'course', config: nameTitleConfig },
-        { name: 'institute', config: nameTitleConfig },
-        { name: 'position', config: nameTitleConfig },
-        { name: 'company', config: companyConfig },
-        { name: 'job_desc', config: objectiveConfig },
-        { name: 'email_id', config: emailConfig }, // Add email input
-    ];
-
-    // Attach blur event listeners dynamically (works for modal inputs)
-    document.addEventListener('blur', function (event) {
-        const input = event.target;
-        const validatedInput = validatedInputs.find(item => input.name === item.name);
-        if (validatedInput) {
-            cleanInput(input, validatedInput.config);
-        }
-    }, true); // Use capturing phase to catch modal inputs
-
-    // Handle form submissions from ALL forms
-    document.addEventListener('submit', function (event) {
-        // Clean all inputs before submission
-        validatedInputs.forEach(({ name, config }) => {
-            const input = document.querySelector(`[name="${name}"]`); // Works for both input and textarea
-            if (input) cleanInput(input, config);
-        });
-    });
-</script>
-
-    <script>
-    // Set the max attribute dynamically for Date of Birth
-    const today = new Date();
-    const minAge = 15;
-    const maxDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
-    const formattedMaxDate = maxDate.toISOString().split('T')[0];
-
-    // Apply the max attribute to the DOB input field
-    document.querySelector('input[name="dob"]').setAttribute('max', formattedMaxDate);
-    
-    document.querySelector('form').addEventListener('submit', function (event) {
-        const dobInput = document.querySelector('input[name="dob"]');
-        const emailInput = document.querySelector('input[name="email_id"]');
-
-        // Validate Date of Birth (DOB)
-        const dob = new Date(dobInput.value);
-        const currentDate = new Date();
-
-        if (dob > currentDate) {
-            alert('Date of Birth cannot be in the future.');
-            event.preventDefault();
-            return;
-        }
-
-        // Check if the user is at least 15 years old
-        if (dob > maxDate) {
-            alert('You must be at least 15 years old.');
-            event.preventDefault();
-            return;
-        }
-
-        // Validate Email
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(emailInput.value)) {
-            alert('Please enter a valid email address.');
-            event.preventDefault();
-            return;
-        }
-    });
-</script>
+    <script src="./assets/js/email-validation.js"></script>
+    <script src="./assets/js/input-validation.js"></script>
+    <script src="./assets/js/dates-validation.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
